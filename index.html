@@ -63,6 +63,9 @@
   .purpose b{color:var(--amber);}
   .first{font-size:.82rem; color:var(--green); margin:2px 2px 10px; font-weight:600;}
   .first .k{opacity:.8;}
+  .note{font-size:.82rem; color:var(--sub); margin:2px 2px 10px; padding-left:11px; border-left:2px solid var(--line);}
+  .note span{display:block; margin-bottom:3px;}
+  .note span:last-child{margin-bottom:0;}
 
   label.chk{
     display:flex; align-items:flex-start; gap:11px; padding:9px 4px;
@@ -239,15 +242,16 @@
       <div class="ttl">📘 簿記2級・<span class="fieldval" data-f="boki">今日の単元</span></div>
       <div class="purpose"><b>🎯 目的：</b>経理転職に向けた“武器”を増やす時間。ただ見るのではなく「実務で使う知識を仕入れている」意識で。冴えた朝イチを最重要科目に。</div>
       <div class="first"><span class="k">🔑 最初の一手：</span>座って教材を開き、動画を再生。</div>
-      <label class="chk"><input type="checkbox" data-id="m2a"><span class="box"></span><span class="txt">講義を視聴（〜6:00 / 約40分）</span></label>
-      <label class="chk"><input type="checkbox" data-id="m2b"><span class="box"></span><span class="txt">関連問題を解く（6:00〜6:30 / 直後アウトプットで定着）</span></label>
+      <div class="note"><span>講義を視聴（〜6:00 / 約40分）</span><span>関連問題を解く（6:00〜6:30 / 直後アウトプットで定着）</span></div>
+      <label class="chk"><input type="checkbox" data-id="m2a"><span class="box"></span><span class="txt">📘 簿記2級をやった</span></label>
     </div>
 
     <div class="block">
       <div class="time">6:30 – 7:00</div>
       <div class="ttl">☕ バッファ</div>
       <div class="purpose"><b>🎯 目的：</b>詰め込みすぎない“あそび”の確保。ここがあるから計画が崩れない。会はここで退出してOK。</div>
-      <label class="chk"><input type="checkbox" data-id="m3"><span class="box"></span><span class="txt">朝食・コーヒー・軽くストレッチ・予備時間</span></label>
+      <div class="note"><span>朝食・コーヒー・軽くストレッチ・予備時間</span></div>
+      <label class="chk"><input type="checkbox" data-id="m3"><span class="box"></span><span class="txt">☕ ひと休みした</span></label>
     </div>
 
     <div class="block">
@@ -255,8 +259,8 @@
       <div class="ttl">✍️ ブログ執筆：<span class="fieldval" data-f="blog">今日の記事</span></div>
       <div class="purpose"><b>🎯 目的：</b>将来の収入の柱を毎日少しずつ積む。完成させなくていい。「今日も1ブロック前進した」事実が続ける力になる。</div>
       <div class="first"><span class="k">🔑 最初の一手：</span>エディタを開いて、見出し（H2）を3つ書き出す。</div>
-      <label class="chk"><input type="checkbox" data-id="m4a"><span class="box"></span><span class="txt">見出しを3つ書き出す</span></label>
-      <label class="chk"><input type="checkbox" data-id="m4b"><span class="box"></span><span class="txt">1セクション書き切る（目標）</span></label>
+      <div class="note"><span>見出しを3つ書き出す</span><span>1セクション書き切る（目標）</span></div>
+      <label class="chk"><input type="checkbox" data-id="m4a"><span class="box"></span><span class="txt">✍️ ブログを書いた</span></label>
     </div>
 
     <div class="block" style="text-align:center; color:var(--green); font-weight:700;">
