@@ -94,6 +94,22 @@
   .btnrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
   .btnrow .ovice{margin-top:0;}
 
+  .stretch{
+    background:var(--card2); border:1px solid var(--line);
+    border-radius:10px; padding:11px 12px; margin-bottom:10px;
+  }
+  .stretch-part{
+    display:inline-block; background:#3a2d52; color:#c8b3f0;
+    font-size:.72rem; font-weight:700; padding:2px 10px; border-radius:20px; margin-bottom:7px;
+  }
+  .stretch-title{font-size:.9rem; font-weight:700; color:var(--text); margin-bottom:3px; line-height:1.4;}
+  .stretch-acct{font-size:.76rem; color:var(--sub); margin-bottom:9px;}
+  .cycle{
+    background:transparent; border:1px solid var(--line); color:var(--sub);
+    border-radius:8px; padding:8px 12px; font-size:.82rem; cursor:pointer; font-family:inherit;
+  }
+  .cycle:active{background:var(--card);}
+
   .editfield{
     display:block; width:100%; margin-top:6px; padding:9px 11px;
     background:var(--card2); border:1px dashed var(--sub); border-radius:8px;
@@ -161,6 +177,21 @@
 
       <label class="chk"><input type="checkbox" data-id="n15"><span class="box"></span>
         <span class="txt">💊 内服薬・外用薬<span style="color:var(--sub);font-size:.8rem;">（水虫の治療）</span></span></label>
+    </div>
+
+    <div class="block">
+      <div class="ttl">🧘 柔軟・ストレッチ（ボルダリング強化）</div>
+      <div class="purpose"><b>🎯 目的：</b>ボルダリングのパフォーマンスUP。柔軟性と可動域を広げて、ムーブの幅を増やし・ケガを予防する。日替わりで1本ずつ。</div>
+      <div class="stretch">
+        <div class="stretch-part" id="stPart">部位</div>
+        <div class="stretch-title" id="stTitle">タイトル</div>
+        <div class="stretch-acct" id="stAcct">アカウント</div>
+        <div class="btnrow">
+          <a class="ovice" id="stLink" href="#" target="_blank" rel="noopener" style="background:#3a1620;color:#ff8aa5;border-color:#7a2d3d;">▶️ 今日のストレッチを再生</a>
+          <button class="cycle" id="stCycle">↻ 別の動画にする</button>
+        </div>
+      </div>
+      <label class="chk"><input type="checkbox" data-id="n16"><span class="box"></span><span class="txt">🧘 今日のストレッチをやった</span></label>
     </div>
 
     <div class="block">
@@ -359,6 +390,43 @@
     });
   });
   updateSpans();
+
+  // 夜の柔軟・ストレッチ（日替わり1本／ボルダリング強化）
+  var STRETCH=[
+    {part:'股関節・尻', acct:'tomiryu', title:'下半身全体を柔らかくする万能ストレッチ（10分）', id:'g9BT8ZpR0as'},
+    {part:'背骨', acct:'パーソナルトレーナー丈【ジョー】', title:'体の硬い人はまずコレ！4分でフニャフニャに', id:'JFG7N53O8CM'},
+    {part:'股関節・尻', acct:'パーソナルトレーナー丈【ジョー】', title:'超硬い人向け ガチガチ股関節が柔らかくなる（10分）', id:'fvvlWWArePc'},
+    {part:'筋膜リリース', acct:'リリースハウス', title:'全身フォームローラールーティン（22分）', id:'XQtnx6U-D4g'},
+    {part:'反り腰', acct:'オガトレ', title:'反り腰をしっかり解消するストレッチ', id:'IPvnqtokBMk'},
+    {part:'上半身', acct:'tomiryu', title:'上半身ストレッチ（6分）疲労回復・リラックス', id:'Rj0C1YvpRMU'},
+    {part:'股関節・尻', acct:'JapaneseYOGA', title:'股関節を柔らかくする10分ヨガ', id:'QZ2D41RX8pQ'},
+    {part:'首', acct:'美容整体アピアランスTV', title:'ストレートネック・首こり肩こり解消', id:'nT-Z9U7XH94'},
+    {part:'筋膜リリース', acct:'オガトレ', title:'ボール1つで背中〜お尻のコリをほぐす（5分）', id:'w0L6plNnuig'},
+    {part:'肩甲骨', acct:'オガトレ', title:'肩甲骨が超硬い人向け 柔らかくなるストレッチ', id:'ZYTlwh_FhoU'}
+  ];
+  function stretchDayNum(){
+    var n=new Date();
+    if(n.getHours()<12) n.setDate(n.getDate()-1); // 朝のうちは前夜と同じサイクル
+    return Math.floor(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())/86400000);
+  }
+  var SKEY='stretchOffset';
+  function stretchOffset(){
+    try{ var s=JSON.parse(localStorage.getItem(SKEY)||'{}'); if(s.day===dayKey()) return s.off||0; }catch(e){}
+    return 0; // 新しい日 → オフセットをリセット
+  }
+  function renderStretch(){
+    var idx=(((stretchDayNum()+stretchOffset())%STRETCH.length)+STRETCH.length)%STRETCH.length;
+    var v=STRETCH[idx];
+    document.getElementById('stPart').textContent='💪 '+v.part;
+    document.getElementById('stTitle').textContent=v.title;
+    document.getElementById('stAcct').textContent=v.acct;
+    document.getElementById('stLink').href='https://www.youtube.com/watch?v='+v.id;
+  }
+  document.getElementById('stCycle').addEventListener('click',function(){
+    localStorage.setItem(SKEY,JSON.stringify({day:dayKey(),off:stretchOffset()+1}));
+    renderStretch();
+  });
+  renderStretch();
 
   // サービスワーカー登録（オフライン対応）
   if('serviceWorker' in navigator){
