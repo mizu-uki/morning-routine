@@ -104,11 +104,12 @@
   }
   .stretch-title{font-size:.9rem; font-weight:700; color:var(--text); margin-bottom:3px; line-height:1.4;}
   .stretch-acct{font-size:.76rem; color:var(--sub); margin-bottom:9px;}
-  .cycle{
-    background:transparent; border:1px solid var(--line); color:var(--sub);
-    border-radius:8px; padding:8px 12px; font-size:.82rem; cursor:pointer; font-family:inherit;
+  .stretch-select{
+    display:block; width:100%; margin-bottom:9px; padding:9px 11px;
+    background:var(--card); border:1px solid var(--line); border-radius:8px;
+    color:var(--text); font-size:.85rem; font-family:inherit;
   }
-  .cycle:active{background:var(--card);}
+  .stretch-select:focus{outline:none; border-color:var(--accent);}
 
   .editfield{
     display:block; width:100%; margin-top:6px; padding:9px 11px;
@@ -186,10 +187,8 @@
         <div class="stretch-part" id="stPart">部位</div>
         <div class="stretch-title" id="stTitle">タイトル</div>
         <div class="stretch-acct" id="stAcct">アカウント</div>
-        <div class="btnrow">
-          <a class="ovice" id="stLink" href="#" target="_blank" rel="noopener" style="background:#3a1620;color:#ff8aa5;border-color:#7a2d3d;">▶️ 今日のストレッチを再生</a>
-          <button class="cycle" id="stCycle">↻ 別の動画にする</button>
-        </div>
+        <select class="stretch-select" id="stSelect"></select>
+        <a class="ovice" id="stLink" href="#" target="_blank" rel="noopener" style="background:#3a1620;color:#ff8aa5;border-color:#7a2d3d;">▶️ このストレッチを再生</a>
       </div>
       <label class="chk"><input type="checkbox" data-id="n16"><span class="box"></span><span class="txt">🧘 今日のストレッチをやった</span></label>
     </div>
@@ -409,21 +408,28 @@
     if(n.getHours()<12) n.setDate(n.getDate()-1); // 朝のうちは前夜と同じサイクル
     return Math.floor(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())/86400000);
   }
-  var SKEY='stretchOffset';
-  function stretchOffset(){
-    try{ var s=JSON.parse(localStorage.getItem(SKEY)||'{}'); if(s.day===dayKey()) return s.off||0; }catch(e){}
-    return 0; // 新しい日 → オフセットをリセット
+  function autoIndex(){ return ((stretchDayNum()%STRETCH.length)+STRETCH.length)%STRETCH.length; }
+  var PKEY='stretchPick';
+  function readPick(){
+    try{ var p=JSON.parse(localStorage.getItem(PKEY)||'{}'); if(p.day===dayKey()) return p.sel; }catch(e){}
+    return 'auto'; // 新しい日 → 今日のおすすめに戻る
   }
+  var stSel=document.getElementById('stSelect');
+  // プルダウンに「今日のおすすめ」＋全10本を流し込む
+  stSel.innerHTML='<option value="auto">📅 今日のおすすめ（日替わり）</option>'+
+    STRETCH.map(function(v,i){ return '<option value="'+i+'">💪 '+v.part+'：'+v.title+'</option>'; }).join('');
   function renderStretch(){
-    var idx=(((stretchDayNum()+stretchOffset())%STRETCH.length)+STRETCH.length)%STRETCH.length;
+    var sel=readPick();
+    var idx = sel==='auto' ? autoIndex() : (parseInt(sel,10)||0);
     var v=STRETCH[idx];
     document.getElementById('stPart').textContent='💪 '+v.part;
     document.getElementById('stTitle').textContent=v.title;
     document.getElementById('stAcct').textContent=v.acct;
     document.getElementById('stLink').href='https://www.youtube.com/watch?v='+v.id;
+    stSel.value=sel; // プルダウンの表示を現在の選択に同期
   }
-  document.getElementById('stCycle').addEventListener('click',function(){
-    localStorage.setItem(SKEY,JSON.stringify({day:dayKey(),off:stretchOffset()+1}));
+  stSel.addEventListener('change',function(){
+    localStorage.setItem(PKEY,JSON.stringify({day:dayKey(),sel:stSel.value}));
     renderStretch();
   });
   renderStretch();
