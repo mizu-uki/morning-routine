@@ -38,6 +38,21 @@
   }
   .lead b{color:var(--text);}
 
+  .merits{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    margin:-10px 0 22px; overflow:hidden;
+  }
+  .merits summary{
+    cursor:pointer; padding:12px 14px; font-size:.9rem; font-weight:700;
+    color:var(--amber); list-style:none; user-select:none;
+  }
+  .merits summary::-webkit-details-marker{display:none;}
+  .merits[open] summary{border-bottom:1px solid var(--line);}
+  .merits ul{margin:0; padding:12px 16px 12px 30px; font-size:.86rem; color:var(--sub);}
+  .merits li{margin-bottom:8px;}
+  .merits li:last-child{margin-bottom:0;}
+  .merits b{color:var(--text);}
+
   .tabs{display:flex; gap:8px; margin-bottom:18px;}
   .tab{
     flex:1; text-align:center; padding:11px 0; border-radius:10px;
@@ -148,6 +163,18 @@
     <b>各タスクの目的</b>で自分を引っ張る。
   </div>
 
+  <details class="merits">
+    <summary>☀️ 早起きのメリット（タップで確認）</summary>
+    <ul>
+      <li>🧠 <b>朝は脳のゴールデンタイム。</b>集中力が一番高く、勉強・副業が最もはかどる</li>
+      <li>🤫 <b>誰にも邪魔されない</b>静かな自分時間が手に入る</li>
+      <li>🌱 簿記・副業が毎日進み、<b>将来の選択肢（収入・転職）が広がる</b></li>
+      <li>☀️ 朝日を浴びて<b>セロトニン分泌</b> → 気分が安定し、夜の寝つきも良くなる</li>
+      <li>⏰ 一日を<b>余裕を持って</b>始められる。バタバタしない</li>
+      <li>💪 「早起きできた」という小さな成功が<b>自己肯定感</b>を上げる</li>
+    </ul>
+  </details>
+
   <div class="tabs">
     <div class="tab" data-t="morning">🌅 明朝 5–8時</div>
     <div class="tab active" data-t="night">🌙 前夜の準備</div>
@@ -244,7 +271,7 @@
       <div class="ttl">🛏 就寝直前</div>
 
       <label class="chk"><input type="checkbox" data-id="n12"><span class="box"></span>
-        <span class="txt">📱 iPhone・iPadを<b>格納Boxへ</b>しまう<span style="color:var(--sub);font-size:.8rem;">（寝室に持ち込まない）</span></span></label>
+        <span class="txt">📱 iPhoneを<b>格納Boxへ</b>しまう<span style="color:var(--sub);font-size:.8rem;">（寝室に持ち込まない）</span></span></label>
 
       <label class="chk"><input type="checkbox" data-id="n5"><span class="box"></span>
         <span class="txt">🛏 <b>21:45に布団へ</b>（22:00入眠＝7時間睡眠）</span></label>
@@ -253,6 +280,14 @@
 
   <!-- ========== 明朝 ========== -->
   <section id="morning">
+
+    <div class="block">
+      <div class="time">5:00 起床</div>
+      <div class="ttl">🛏 ベッド・布団から脱出</div>
+      <div class="purpose"><b>🎯 目的：</b>二度寝の最大の壁＝布団の中。まず物理的に布団から出れば勝ち。考えずに体を動かす。</div>
+      <label class="chk"><input type="checkbox" data-id="m0a"><span class="box"></span><span class="txt">🧘 床（ヨガマット）に移動</span></label>
+      <label class="chk"><input type="checkbox" data-id="m0b"><span class="box"></span><span class="txt">⏰ 3分タイマーで起床</span></label>
+    </div>
 
     <div class="block">
       <div class="time">5:00 – 5:15</div>
