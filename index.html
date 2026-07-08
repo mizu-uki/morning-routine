@@ -499,6 +499,31 @@
   });
   renderStretch();
 
+  // 朝の自動リロード（最新版＆当日表示にする）
+  // ① 開いたまま朝を迎えたら 4:00 に一度リロード
+  // ② 一度閉じて再び開いたとき、前回読み込みから「日付サイクル」が変わっていたらリロード
+  //    （チェックはlocalStorage保存なので消えません）
+  (function(){
+    var loadedAt=new Date();
+    // 4時起点で「その日」を判定（4時前は前日扱い）
+    function cycleDay(dt){ var x=new Date(dt); if(x.getHours()<4) x.setDate(x.getDate()-1); return x.toDateString(); }
+    // ① 次の 4:00:05 までの残り時間でリロードを予約
+    function msUntil4am(){
+      var n=new Date();
+      var t=new Date(n.getFullYear(),n.getMonth(),n.getDate(),4,0,5,0);
+      if(n>=t) t.setDate(t.getDate()+1);
+      return t-n;
+    }
+    setTimeout(function(){ location.reload(); }, msUntil4am());
+    // ② 復帰時：日付サイクルが変わっていたら最新化
+    function maybeRefresh(){
+      if(document.visibilityState!=='visible') return;
+      if(cycleDay(loadedAt)!==cycleDay(new Date())) location.reload();
+    }
+    document.addEventListener('visibilitychange', maybeRefresh);
+    window.addEventListener('pageshow', maybeRefresh);
+  })();
+
   // サービスワーカー登録（オフライン対応）
   if('serviceWorker' in navigator){
     window.addEventListener('load',function(){
