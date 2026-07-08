@@ -389,13 +389,13 @@
   var h=new Date().getHours();
   if(h>=4&&h<12){ document.querySelector('.tab[data-t="morning"]').click(); }
 
-  // チェック状態の保存・復元（昼12時を境に自動リセット）
-  // 「前夜の準備」と「翌朝の実行」は1セットなので、深夜0時ではなく正午で日付を区切る
+  // チェック状態の保存・復元（午前4時を境に自動リセット＝朝はまっさらで開始）
+  // 前夜の準備チェックも4時に消える。5時起床時には常にリセット済みの状態になる
   var KEY='morningPlanState';
   var boxes=document.querySelectorAll('input[type=checkbox]');
   function dayKey(){
     var n=new Date();
-    if(n.getHours()<12) n.setDate(n.getDate()-1); // 朝のうちは前夜と同じサイクル扱い
+    if(n.getHours()<4) n.setDate(n.getDate()-1); // 午前4時前は前日サイクル扱い
     return n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate();
   }
   function load(){
@@ -470,7 +470,7 @@
   ];
   function stretchDayNum(){
     var n=new Date();
-    if(n.getHours()<12) n.setDate(n.getDate()-1); // 朝のうちは前夜と同じサイクル
+    if(n.getHours()<4) n.setDate(n.getDate()-1); // 午前4時を境に翌日扱い（チェックのリセットと統一）
     return Math.floor(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())/86400000);
   }
   function autoIndex(){ return ((stretchDayNum()%STRETCH.length)+STRETCH.length)%STRETCH.length; }
