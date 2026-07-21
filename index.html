@@ -82,6 +82,20 @@
   .note span{display:block; margin-bottom:3px;}
   .note span:last-child{margin-bottom:0;}
 
+  /* 開閉できる参考メモ */
+  .memo{background:var(--card2); border:1px solid var(--line); border-radius:10px; margin:2px 0 10px; overflow:hidden;}
+  .memo>summary{cursor:pointer; padding:10px 12px; font-size:.84rem; font-weight:700; color:var(--accent); list-style:none; user-select:none;}
+  .memo>summary::-webkit-details-marker{display:none;}
+  .memo[open]>summary{border-bottom:1px solid var(--line);}
+  .memo-body{padding:6px 12px 10px;}
+  .memo-body>details{margin:2px 0;}
+  .memo-body>details+details{border-top:1px solid var(--line);}
+  .memo-body summary{cursor:pointer; font-size:.83rem; font-weight:700; color:var(--text); padding:8px 0 6px;}
+  .memo-body ul,.memo-body ol{margin:2px 0 8px; padding-left:19px; font-size:.8rem; color:var(--sub); line-height:1.7;}
+  .memo-body li{margin-bottom:4px;}
+  .memo-body p{margin:2px 0 8px; font-size:.8rem; color:var(--sub); line-height:1.7;}
+  .memo-body b{color:var(--text);}
+
   label.chk{
     display:flex; align-items:flex-start; gap:11px; padding:9px 4px;
     border-top:1px solid var(--line); cursor:pointer; font-size:.93rem;
@@ -216,7 +230,73 @@
         <span class="txt">👕 パジャマに着替える</span></label>
 
       <label class="chk"><input type="checkbox" data-id="n7"><span class="box"></span>
-        <span class="txt">🦷 フロス → 歯磨き<span style="color:var(--sub);font-size:.8rem;">（歯周病・虫歯予防）</span></span></label>
+        <span class="txt">🦷 フロス → 歯磨き（2〜3分）<span style="color:var(--sub);font-size:.8rem;">（歯周病・虫歯予防）</span></span></label>
+
+      <details class="memo">
+        <summary>📝 歯磨き・フロスのメモ（タップで開く）</summary>
+        <div class="memo-body">
+
+          <details>
+            <summary>🪥 歯ブラシの交換（1ヶ月）</summary>
+            <p>1ヶ月に1度の交換は妥当。毛先が開いていなくても弾力は落ちるので<b>1〜2ヶ月が推奨レンジ</b>。5本入りで5ヶ月分・月238円なら気にする額ではない。</p>
+          </details>
+
+          <details>
+            <summary>💪 歯磨きの力加減（力はほぼ要らない）</summary>
+            <ul>
+              <li>目安は <b>150〜200g</b>。毛先が「わずかに広がるか広がらないか」。キッチンスケールに押し当てると感覚が掴める</li>
+              <li>強く当てると毛先が寝て、歯間や歯周ポケットの入口に入らない。汚れを落とすのは<b>毛先</b>なので、力むほど落ちなくなる逆転が起きる</li>
+              <li>力任せの往復は<b>歯ぐき退縮・くさび状欠損</b>（根元がV字に削れる）の主因。これは戻らない</li>
+            </ul>
+            <p>効くのは力ではなく、この3つ：</p>
+            <ol>
+              <li><b>角度</b> — 歯と歯ぐきの境目に45度で当てる</li>
+              <li><b>ストローク幅</b> — 5〜10mm。1〜2本ずつ動かす</li>
+              <li><b>時間</b> — 最低2分</li>
+            </ol>
+            <p>ルシェロB-20Mは「細い毛を境目に入れる」設計。力を抜くほど設計どおりに機能し、押し付けると普通の歯ブラシになる。ブラシで届くのは<b>歯面のみ</b>。歯間はフロスか歯間ブラシでしか落ちない。</p>
+          </details>
+
+          <details>
+            <summary>🧵 フロスの使い方</summary>
+            <p><b>順番：フロス → ブラッシング。</b>先に歯間の汚れを掻き出すと、後のフッ素が歯間まで行き渡る。</p>
+            <ol>
+              <li>長さ40cm程度。両手の中指に巻き、間を1〜1.5cmにしてつまむ</li>
+              <li>ノコギリのように前後させながらゆっくり挿入（真下に落とすと歯ぐきを切る）</li>
+              <li>歯間に入ったら片側の歯面に<b>C字型</b>に沿わせる</li>
+              <li>歯ぐきの中に1〜2mm入れてから上下に数回こすり上げる（ポケット入口が一番汚れる）</li>
+              <li>同じ隙間で<b>反対側の歯面</b>も同様に（1隙間＝2面。ここが抜けやすい）</li>
+              <li>抜くときも前後に動かし、歯間ごとに指を巻き替えて未使用部分を使う</li>
+            </ol>
+            <p><b>やりがちなミス：</b>上下往復だけ／歯ぐき手前で止める／一番奥の歯の奥側を飛ばす／血が出るからやめる（出血は炎症のサイン。1〜2週間で収まる。毎回同じ場所だけなら歯科へ）。</p>
+            <p><b>頻度：</b>1日1回、夜だけでOK。全歯間で2〜3分。<b>道具：</b>糸巻きタイプが上位互換。隙間が広い・歯ぐきが下がった所は歯間ブラシが効率的。</p>
+          </details>
+
+          <details>
+            <summary>🛡 フッ素を活かす（なぜフロスが先か）</summary>
+            <p>歯間は虫歯ができやすいのにフッ素が最も届きにくい弱点。歯垢が残って酸で溶け、鏡で見えず痛みも出にくいので気づくと進んでいる。</p>
+            <ol>
+              <li><b>再石灰化を促す</b> — 修復後の結晶を酸に強いフルオロアパタイトに変える</li>
+              <li><b>歯を溶けにくく</b> — 表面がフッ素を取り込み酸への耐性UP</li>
+              <li><b>細菌の酸産生を抑える</b></li>
+            </ol>
+            <p><b>小ワザ：</b>歯磨き後のうがいは最小限（水少量で1回）／就寝前が最重要（唾液が減り再石灰化も落ちる）／市販は上限1,450ppmを選ぶ。</p>
+          </details>
+
+          <details>
+            <summary>⏱ 磨く時間（最低2分・理想3分）</summary>
+            <p>本質は「全部の面をムラなく磨けたか」。磨くべき面は約100面あり、1面数秒で自然に2〜3分になる。多くの人は1分弱で終えていて磨き残しが出る。</p>
+            <ol>
+              <li><b>順番を固定</b> — 右上外側から一筆書きで一周。これだけで磨き残しが激減</li>
+              <li><b>1〜2本ずつ小刻み</b> — ストローク5〜10mm</li>
+              <li><b>45度で境目に</b>（バス法）／力は150〜200g／噛む面は垂直に往復</li>
+            </ol>
+            <p><b>磨き残し三大：</b>奥歯の一番奥の面／下の前歯の裏側／歯と歯ぐきの境目全周。</p>
+            <p><b>運用：</b>夜1回だけ「フロス→磨き→ゆすぎ最小限」を丁寧に3分、朝昼は1〜2分でOK。回数より夜の質。タイマーや電動の2分ブザーで切り上げグセを矯正。</p>
+          </details>
+
+        </div>
+      </details>
 
       <label class="chk"><input type="checkbox" data-id="n8"><span class="box"></span>
         <span class="txt">👃 綿棒で鼻を掃除 → 鼻・唇にワセリン<span style="color:var(--sub);font-size:.8rem;">（鼻炎予防）</span></span></label>
